@@ -31,8 +31,8 @@ jobs:
           echo "github.event_name: ${{ github.event_name }}"
           echo "git branch: ${{ github.repository }}/${{ github.ref }}"
 
-          echo 'env:'; echo "${{ toJSON(env) }}" | jq --indent=4 . 
-          echo 'vars:'; echo "${{ toJSON(vars) }}" | jq --indent=4 . 
+          echo 'env:'; echo "${{ toJSON(env) }}" | jq . 
+          echo 'vars:'; echo "${{ toJSON(vars) }}" | jq . 
 
       - name: ls
         env:
