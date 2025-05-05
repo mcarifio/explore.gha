@@ -1,13 +1,13 @@
+#!/usr/bin/env -S gh workflow run
+
 name: start
 run-name: github.actor: ${{ github.actor }}
 on: [push]
 jobs:
-  job-checkout+announce+ls+exit:
+  job-announce+ls+exit:
     runs-on: ubuntu-latest
+    uses: actions/checkout@v4
     steps:
-      - name: ${{ github.workflow }}/${{ github.job }} checkout ${{ github.repository }}/${{ github.ref }}
-        uses: actions/checkout@v4
-
       # contexts: github, env, job, jobs, steps, runner, secrets, strategy, matrix, needs, inputs, config, status
       - name: announce ${{ github.job }}
         run: |
