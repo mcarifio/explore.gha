@@ -27,7 +27,6 @@ jobs:
 
           echo 'env:'; echo "${{ toJSON(env) }}" | jq --indent=4 . 
           echo 'vars:'; echo "${{ toJSON(vars) }}" | jq --indent=4 . 
-          # echo 'config:'; echo "${{ toJSON(config) }}" | jq --indent=4 . 
 
       - name: "ls ${{ github.workspace }}"
         run: |
