@@ -2,7 +2,9 @@
 
 name: start
 run-name: "github.actor ${{ github.actor }}"
-on: [ workflow-dispatch, push ]
+on:
+  workflow-dispatch:
+  push:
 jobs:
   job-announce+ls+exit:
     runs-on: ubuntu-latest
