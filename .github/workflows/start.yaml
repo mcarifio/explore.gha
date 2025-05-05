@@ -10,6 +10,9 @@ jobs:
     runs-on: ubuntu-latest
     env:
       current_job: start-job0
+    defaults:
+      run:
+        shell: bash -x {0}
     steps:
 
       # always first?
@@ -31,8 +34,8 @@ jobs:
           echo "github.event_name: ${{ github.event_name }}"
           echo "git branch: ${{ github.repository }}/${{ github.ref }}"
 
-          echo 'env:'; echo "${{ toJSON(env) }}" | jq 
-          echo 'vars:'; echo "${{ toJSON(vars) }}" | jq 
+          echo 'env'; echo "${{ toJSON(env) }}" | jq -r .
+          echo 'vars'; echo "${{ toJSON(vars) }}" | jq -r .
 
       - name: ls
         env:
