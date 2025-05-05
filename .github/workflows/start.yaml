@@ -6,16 +6,16 @@ on:
   workflow_dispatch:
   push:
 jobs:
-  job-announce+ls+exit:
+  start-job0:
     runs-on: ubuntu-latest
     steps:
 
       # always first?
-      - name: checkout
+      - name: ${{ github.job }}-checkout
         uses: actions/checkout@v4
 
       # contexts: github, env, job, jobs, steps, runner, secrets, strategy, matrix, needs, inputs, config, status
-      - name: "announce ${{ github.job }}"
+      - name: ${{ github.job }}-announce
         run: |
           echo "runner.os: ${{ runner.os }}"
           echo "runner.name: ${{ runner.name }}"
@@ -28,11 +28,11 @@ jobs:
           echo 'env:'; echo "${{ toJSON(env) }}" | jq --indent=4 . 
           echo 'vars:'; echo "${{ toJSON(vars) }}" | jq --indent=4 . 
 
-      - name: "ls ${{ github.workspace }}"
+      - name: ${{ github.job }}-ls
         run: |
           echo "pwd: ${PWD}"
           ls -la ${{ github.workspace }}
 
-      - name: exit
+      - name: ${{ github.job }}-exit
         run: |
           echo "exit: ${{ job.status }}"
