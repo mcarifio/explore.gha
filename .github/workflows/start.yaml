@@ -1,15 +1,15 @@
 #!/usr/bin/env -S gh workflow run
 
 name: start
-run-name: github.actor: ${{ github.actor }}
-on: [push]
+run-name: "github.actor ${{ github.actor }}"
+on: [ workflow-dispatch, push ]
 jobs:
   job-announce+ls+exit:
     runs-on: ubuntu-latest
     uses: actions/checkout@v4
     steps:
       # contexts: github, env, job, jobs, steps, runner, secrets, strategy, matrix, needs, inputs, config, status
-      - name: announce ${{ github.job }}
+      - name: "announce ${{ github.job }}"
         run: |
           echo "runner.os: ${{ runner.os }}"
           echo "runner.name: ${{ runner.name }}"
@@ -23,7 +23,7 @@ jobs:
           echo 'vars:'; echo "${{ toJSON(vars) }}" | jq --indent=4 . 
           echo 'config:'; echo "${{ toJSON(config) }}" | jq --indent=4 . 
 
-      - name: ls ${{ github.workspace }}
+      - name: "ls ${{ github.workspace }}"
         run: |
           echo "pwd: ${PWD}"
           ls -la ${{ github.workspace }}
