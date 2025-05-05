@@ -1,0 +1,33 @@
+name: start
+run-name: github.actor: ${{ github.actor }}
+on: [push]
+jobs:
+  job-checkout+announce+ls+exit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: ${{ github.workflow }}/${{ github.job }} checkout ${{ github.repository }}/${{ github.ref }}
+        uses: actions/checkout@v4
+
+      # contexts: github, env, job, jobs, steps, runner, secrets, strategy, matrix, needs, inputs, config, status
+      - name: announce ${{ github.job }}
+        run: |
+          echo "runner.os: ${{ runner.os }}"
+          echo "runner.name: ${{ runner.name }}"
+          echo "runner.arch: ${{ runner.arch }}"
+          echo "job name github.job: ${{ github.job }}"
+          echo "workflow name: ${{ github.workflow }}"
+          echo "github.event_name: ${{ github.event_name }}"
+          echo "git branch: ${{ github.repository }}/${{ github.ref }}"
+
+          echo 'env:'; echo "${{ toJSON(env) }}" | jq --indent=4 . 
+          echo 'vars:'; echo "${{ toJSON(vars) }}" | jq --indent=4 . 
+          echo 'config:'; echo "${{ toJSON(config) }}" | jq --indent=4 . 
+
+      - name: ls ${{ github.workspace }}
+        run: |
+          echo "pwd: ${PWD}"
+          ls -la ${{ github.workspace }}
+
+      - name: exit
+        run: |
+          echo "exit: ${{ job.status }}"
