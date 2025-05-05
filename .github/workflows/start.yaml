@@ -8,14 +8,20 @@ on:
 jobs:
   start-job0:
     runs-on: ubuntu-latest
+    env:
+      current_job: start-job0
     steps:
 
       # always first?
-      - name: ${{ github.job }}-checkout
+      - name: checkout
         uses: actions/checkout@v4
+        env:
+          current_step: checkout
 
       # contexts: github, env, job, jobs, steps, runner, secrets, strategy, matrix, needs, inputs, config, status
-      - name: ${{ github.job }}-announce
+      - name: announce
+        env:
+          current_step: announce
         run: |
           echo "runner.os: ${{ runner.os }}"
           echo "runner.name: ${{ runner.name }}"
@@ -28,11 +34,15 @@ jobs:
           echo 'env:'; echo "${{ toJSON(env) }}" | jq --indent=4 . 
           echo 'vars:'; echo "${{ toJSON(vars) }}" | jq --indent=4 . 
 
-      - name: ${{ github.job }}-ls
+      - name: ls
+        env:
+          current_step: ls
         run: |
           echo "pwd: ${PWD}"
           ls -la ${{ github.workspace }}
 
-      - name: ${{ github.job }}-exit
+      - name: exit
+        env:
+          current_step: exit
         run: |
           echo "exit: ${{ job.status }}"
