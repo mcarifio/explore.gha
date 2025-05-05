@@ -8,8 +8,12 @@ on:
 jobs:
   job-announce+ls+exit:
     runs-on: ubuntu-latest
-    uses: actions/checkout@v4
     steps:
+
+      # always first?
+      - name: checkout
+        uses: actions/checkout@v4
+
       # contexts: github, env, job, jobs, steps, runner, secrets, strategy, matrix, needs, inputs, config, status
       - name: "announce ${{ github.job }}"
         run: |
