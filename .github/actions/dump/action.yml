@@ -25,6 +25,7 @@ runs:
       env:
         current_step: vars
       shell: bash
+      if: ${{ fromJSON(toJSON(vars)) != {} }}
       run: |
         echo '${{ env.current_step }}'
         echo '${{ toJson(vars) }}' | TERM=xterm jq --color-output .
