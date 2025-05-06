@@ -10,7 +10,8 @@ on:
 defaults:
   run:
      # set -Eeuo pipefail
-     shell: bash --noprofile -eo pipefail -x {0}
+     # shell: bash --noprofile -eo pipefail -x {0}
+     shell: bash -eo pipefail --init-file=init-file.sh -x {0}
 
 
 jobs:
@@ -18,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       current_job: start-job0
-      BASH_ENV: ./.github/workflows/bashrc
+      # BASH_ENV: ./.github/workflows/bashrc
     steps:
 
       # always first?
@@ -39,7 +40,7 @@ jobs:
           current_step: announce
         run: |
           echo "* ${{ env.current_job }}/${{ env.current_step }}"
-          f
+          here
           # echo "runner.os: ${{ runner.os }}"
           # echo "runner.name: ${{ runner.name }}"
           # echo "runner.arch: ${{ runner.arch }}"
