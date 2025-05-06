@@ -10,7 +10,8 @@ on:
 defaults:
   run:
      # set -Eeuo pipefail
-     # shell: bash --noprofile -eo pipefail -x {0}
+     # shell: bash -eo pipefail -x -- {0}
+     shell: bash -eo pipefail -- {0}
      # --init-file init-file.sh does not source?
      # shell: bash --init-file init-file.sh -eo pipefail -x -- {0}
 
@@ -41,17 +42,11 @@ jobs:
           current_step: announce
         run: |
           echo "* ${{ env.current_job }}/${{ env.current_step }}"
+          set -x
           here
-          # echo "runner.os: ${{ runner.os }}"
-          # echo "runner.name: ${{ runner.name }}"
-          # echo "runner.arch: ${{ runner.arch }}"
-          # echo "github.job: ${{ github.job }}"
-          # echo "github.workflow: ${{ github.workflow }}"
-          # echo "github.event_name: ${{ github.event_name }}"
-          # echo "git branch: ${{ github.repository }}/${{ github.ref }}"
 
-          echo 'env'; echo '${{ toJSON(env) }}' | jq --color-output . || true
-          echo 'vars'; echo '${{ toJSON(vars) }}' | jq --color-output . || true
+          echo 'env'; echo '${{ toJSON(env) }}' | jq || true
+          echo 'vars'; echo '${{ toJSON(vars) }}' | jq || true
 
       - name: tree
         env:

@@ -7,4 +7,8 @@ f.x f.x f.e
 f.const() { eval $(printf '%s() ( echo '%q'; )' ${1:?'expecting a function name'} ${2:?'expecting a value'}); f.x $1; }
 f.x f.const
 f.const home "$(realpath -Lq ${BASH_SOURCE})"
+set +x
+
+jq() ( command ${FUNCNAME} --color-output "$@"; )
+f.x jq
 
