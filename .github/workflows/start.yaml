@@ -4,6 +4,7 @@ name: start
 run-name: "github.actor ${{ github.actor }}"
 
 on:
+  # allows gh workflow run
   workflow_dispatch:
   push:
 
@@ -22,34 +23,34 @@ jobs:
       # (indirectly) sourced before each step
       BASH_ENV: "${{ github.workspace }}/bash_env.sh"
     steps:
-      - name: checkout
+      - name: ${{ env.current_job }}/checkout
         env:
-          current_step: ${{ env.current_job }}/checkout
+          current_step: checkout
         uses: actions/checkout@v4
 
-      - name: dump-contexts
+      - name: ${{ env.current_job }}/dump-contexts
         env:
-          current_step: ${{ env.current_job }}/dump-contexts
+          current_step: dump-contexts
         uses: ./.github/actions/dump
 
 
       # contexts: github, env, job, jobs, steps, runner, secrets, strategy, matrix, needs, inputs, config, status
-      - name: announce
+      - name: ${{ env.current_job }}/announce
         env:
-          current_step: ${{ env.current_job }}/announce
+          current_step: announce
         run: |
-          echo 'env'; echo '${{ toJSON(env) }}' | jq || true
-          echo 'vars'; echo '${{ toJSON(vars) }}' | jq || true
+          context env '${{ toJSON(env) }}'
+          context vars '${{ toJSON(vars) }}'
 
-      - name: "${{ env.current_job }}/tree"
+      - name: ${{ env.current_job }}/tree
         env:
           current_step: tree
         run: |
           tree ${PWD}
 
-      - name: "${{ env.current_job }}/EXIT"
+      - name: ${{ env.current_job }}/EXIT
         env:
           current_step: EXIT
         if: always()
         run: |
-          echo "exit: ${{ job.status }}"
+          echo "${{ current_step }}: ${{ job.status }}"

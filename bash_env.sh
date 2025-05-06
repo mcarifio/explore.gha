@@ -25,7 +25,16 @@ f.const build.root "$(dirname $(realpath -Lq ${BASH_SOURCE}))"
 jq() ( command ${FUNCNAME} --color-output "$@"; )
 f.x jq
 
+context() (
+    local label=${1:?'expecting a label like gitub'}
+    local payload=${2:?'expecting a json payload'}
+    echo ${label}
+    jq "${payload}"
+)
+f.x context
+
 # Don't descend into the .git subtree
 tree() ( command ${FUNCNAME} -aF -I .git "$@"; )
+f.x tree
 # set +x
 

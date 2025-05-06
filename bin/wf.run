@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 set -Eeuo pipefail
 
+# wf.run ${wf}.yamlg
+
 run() ( gh workflow run ${1:?'expecting a workflow'}; )
 
 main() (
