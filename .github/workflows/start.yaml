@@ -28,9 +28,9 @@ jobs:
           current_step: checkout
         uses: actions/checkout@v4
 
-      - name: ${{ env.current_job }}/dump-contexts
+      - name: ${{ env.current_job }}/dump
         env:
-          current_step: dump-contexts
+          current_step: dump
         uses: ./.github/actions/dump
 
       # contexts: github, env, job, jobs, steps, runner, secrets, strategy, matrix, needs, inputs, config, status
