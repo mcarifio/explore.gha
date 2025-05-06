@@ -18,7 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       current_job: start-job0
-      BASH_ENV: ./.github/workflows/.bashrc
+      BASH_ENV: ${HOME}/.github/workflows/bashrc
     steps:
 
       # always first?

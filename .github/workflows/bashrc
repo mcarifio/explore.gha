@@ -1,0 +1,2 @@
+f() ( echo ${FUNCNAME}; )
+export -f f
