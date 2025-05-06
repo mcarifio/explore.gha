@@ -6,7 +6,7 @@ runs:
   using: "composite"
   env:
     current_action: dump
-  shell: shell: bash -Eeuo pipefail -- {0}
+  shell: bash -Eeuo pipefail -- {0}
   steps:
     - name: ${{ env.current_action }}/github
       env:
