@@ -27,28 +27,27 @@ jobs:
   launch-job:
     runs-on: ubuntu-latest
     env:
-      current_job: launch
+      current_job: launch-job
       BUILD_ROOT: "${{ github.workspace }}"
       # (indirectly) sourced before each step
       BASH_ENV: "${{ github.workspace }}/bash_env.sh"
     steps:
       # get the code
-      - name: ${{ env.current_job }}/checkout
-        env:
-          current_step: checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
       # launch a script
-      - name: ${{ env.current_job }}/launch
-        env:
-          current_step: launch
-        run: |
+      - run: |
+          echo '${{ env.header }}'
           ${{ inputs.entry }} ${{ inputs.args }}
+        env:
+           current_step: launch
+           header: '${{ env.current_job}}/${{ env.current_step}}'
           
       # report the exit status
-      - name: ${{ env.current_job }}/EXIT
+      - run: |
+          echo "${{ env.header }}: ${{ job.status }}"
         env:
           current_step: EXIT
+          header: '${{ env.current_job}}/${{ env.current_step}}'
         if: always()
-        run: |
-          echo "${{ env.current_step }}: ${{ job.status }}"
+        
