@@ -19,7 +19,6 @@ jobs:
     runs-on: ubuntu-latest
     env:
       current_job: start-job0
-      BASH_ENV: "${{ github.workspace }}/bash_env.sh"
       TOP: "${{ github.workspace }}"
     steps:
 
@@ -39,10 +38,10 @@ jobs:
       - name: announce
         env:
           current_step: "${{ env.current_job }}/announce"
+          BASH_ENV: "${{ github.workspace }}/bash_env.sh"
         run: |
           # echo "* ${{ env.current_step }}"
-          # declare -p BASH_ENV HOME TOP current_step
-          unset -v BASH_ENV
+          declare -p BASH_ENV HOME TOP current_step || true
           echo 'env'; echo '${{ toJSON(env) }}' | jq || true
           echo 'vars'; echo '${{ toJSON(vars) }}' | jq || true
 
