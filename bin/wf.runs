@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+set -Eeuo pipefail
+
+# wf.browse ${wf}.yaml
+
+runs() (
+    local _yaml="${1:?'expecting a workflow'}"; shift
+    gh run list --workflow "${_yaml}" "$@" --json databaseId -q '.[].databaseId' # | tail -n+2
+)
+
+main() (
+    local _yaml="${1:?'expecting a workflow'}"; shift; _yaml=${_yaml##*/}
+    runs ${_yaml} "$@"
+)
+
+main "$@"

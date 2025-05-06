@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+set -Eeuo pipefail
+
+# wf.browse ${wf}.yaml
+
+repo_slug() (
+  local url="$(git config --get remote.origin.url)"
+
+  if [[ "$url" =~ ^git@github.com:(.*)\.git$ ]]; then
+      echo "${BASH_REMATCH[1]}"
+  elif [[ "$url" =~ ^gh:(.*)$ ]]; then
+      echo "${BASH_REMATCH[1]}"
+  elif [[ "$url" =~ ^https://github.com/(.*)\.git$ ]]; then
+    echo "${BASH_REMATCH[1]}"
+  else
+    echo "Unsupported remote URL format: $url" >&2
+    return 1
+  fi
+)
+
+url() ( echo "/repos/$(repo_slug)/actions/runs/${1:?'expecting a run id'}"; )
+
+rm-run() (
+    local -i r=${1:?'expecting a run'}
+    >&2 echo -n "run $r... ";
+    gh api --method DELETE $(url $r) && >&2 echo removed || echo not removed;
+)
+
+rm-runs() (
+    local _yaml="${1:?'expecting a workflow'}"; shift
+    for r in $(wf.runs ${_yaml}); do rm-run $r; done
+)
+
+main() (
+    local _yaml="${1:?'expecting a workflow'}"; shift; _yaml=${_yaml##*/}
+    rm-runs ${_yaml} "$@"
+)
+
+main "$@"
