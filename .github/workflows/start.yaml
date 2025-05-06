@@ -27,7 +27,7 @@ jobs:
           current_step: checkout
 
       - name: dump-contexts
-        uses: .github/actions/dump
+        uses: .github/workflow/actions/dump
         env:
           current_step: dump-contexts
 
