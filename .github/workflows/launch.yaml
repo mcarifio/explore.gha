@@ -24,7 +24,7 @@ defaults:
      shell: bash -Eeuo pipefail -- {0}
 
 jobs:
-  launch:
+  launch-job:
     runs-on: ubuntu-latest
     env:
       current_job: launch
