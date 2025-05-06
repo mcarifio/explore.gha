@@ -7,9 +7,10 @@ on:
   workflow_dispatch:
   push:
 
+env:
+  BASH_ENV: ./.github/workflows/.bashrc
+
 defaults:
-  env:
-    BASH_ENV: ./.github/workflows/.bashrc
   run:
      # set -Eeuo pipefail
      shell: bash --noprofile -eo pipefail -x {0}
