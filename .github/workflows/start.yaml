@@ -10,7 +10,7 @@ on:
 defaults:
   run:
      # set -Eeuo pipefail
-     shell: bash --noprofile --init-file=./.github/workflows/.bashrc -eo pipefail -x {0}
+     shell: env BASH_ENV=./.github/workflows/.bashrc bash --noprofile -eo pipefail -x {0}
 
 
 jobs:
