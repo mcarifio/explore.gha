@@ -43,7 +43,7 @@ jobs:
         env:
           current_step: launch
         run: |
-          ${{ inputs.entry }} ${{ input.args }}
+          ${{ inputs.entry }} ${{ inputs.args }}
           
       # report the exit status
       - name: ${{ env.current_job }}/EXIT
