@@ -1,7 +1,7 @@
 # gh workflow run --workflow=launch.yaml --field entry=${name} --field args="one two three four"
-# bin/wf.run launch.yaml --entry=${name}
-name: launch
+# bin/wf.run launch.yaml -f entry=${name} -f args="one two three four"
 
+name: launch
 on:
   # gh workflow run --workflow=launch.yaml
   workflow_dispatch:
@@ -16,7 +16,6 @@ on:
         description "entry point's args"
         required: false
         default: ''
-  push:
 
 defaults:
   run:

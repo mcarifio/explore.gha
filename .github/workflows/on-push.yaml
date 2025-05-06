@@ -1,6 +1,6 @@
-# gh workflow run --workflow=start.yaml
-# bin/wf.run start.yaml
-name: start
+# gh workflow run --workflow=on-push.yaml
+# bin/wf.run on-push.yaml
+name: on-push
 
 on:
   # allows gh workflow run
@@ -14,10 +14,10 @@ defaults:
      shell: bash -Eeuo pipefail -- {0}
 
 jobs:
-  start-job0:
+  on-push-job0:
     runs-on: ubuntu-latest
     env:
-      current_job: start-job0
+      current_job: on-push-job0
       BUILD_ROOT: "${{ github.workspace }}"
       # (indirectly) sourced before each step
       BASH_ENV: "${{ github.workspace }}/bash_env.sh"
