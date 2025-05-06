@@ -11,8 +11,8 @@ on:
 defaults:
   run:
      # set -Eeuo pipefail, note that --init-file ${file} is NOT honored
-     # shell: bash -eo pipefail -x -- {0}
-     shell: bash -eo pipefail -- {0}
+     # shell: bash -Eueo pipefail -x -- {0}
+     shell: bash -Eeuo pipefail -- {0}
 
 jobs:
   start-job0:

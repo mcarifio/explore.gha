@@ -4,22 +4,21 @@ description: dump contexts
 
 runs:
   using: "composite"
+  env:
+    current_action: dump
+  shell: shell: bash -Eeuo pipefail -- {0}
   steps:
-    - name: github
+    - name: ${{ env.current_action }}/github
       env:
         current_step: github
-      shell: bash
       run: |
-        echo '${{ env.current_step }}'
-        echo '${{ toJson(github) }}' | TERM=xterm jq --color-output .
+        context github '${{ toJson(github) }}'
 
     - name: env
       env:
         current_step: env
-      shell: bash
       run: |
-        echo '${{ env.current_step }}'
-        echo '${{ toJson(env) }}' | TERM=xterm jq --color-output .
+        context env '${{ toJson(env) }}'
 
     # - name: vars
     #   env:
@@ -29,20 +28,16 @@ runs:
     #   run: |
     #     echo '${{ env.current_step }}'
     #     echo '${{ toJson(vars) }}' | TERM=xterm jq --color-output .
-
+    
     - name: runner
       env:
         current_step: runner
-      shell: bash
       run: |
-        echo '${{ env.current_step }}'
-        echo '${{ toJson(runner) }}' | TERM=xterm jq --color-output .
+        context env '${{ toJson(env) }}'
 
     - name: job
       env:
         current_step: job
-      shell: bash
       run: |
-        echo '${{ env.current_step }}'
-        echo '${{ toJson(job) }}' | TERM=xterm jq --color-output .
+        context env '${{ toJson(env) }}'
 
