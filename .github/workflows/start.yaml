@@ -11,7 +11,7 @@ defaults:
   run:
      # set -Eeuo pipefail
      # shell: bash --noprofile -eo pipefail -x {0}
-     shell: bash -eo pipefail --init-file=init-file.sh -x {0}
+     shell: bash --init-file=init-file.sh -eo pipefail -x -- {0}
 
 
 jobs:
