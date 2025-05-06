@@ -42,7 +42,7 @@ jobs:
           current_step: announce
         run: |
           echo "* ${{ env.current_job }}/${{ env.current_step }}"
-          pwd; declare -p BASH_ENV HOME; home
+          pwd; declare -p BASH_ENV HOME; build.root
 
           echo 'env'; echo '${{ toJSON(env) }}' | jq || true
           echo 'vars'; echo '${{ toJSON(vars) }}' | jq || true
