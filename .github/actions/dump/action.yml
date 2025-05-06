@@ -7,6 +7,7 @@ runs:
   # shell: bash
   steps:
     - name: dump/github
+      shell: bash
       env:
         current_step: github
         BASH_ENV: "${{ github.workspace }}/bash_env.sh"
@@ -15,8 +16,10 @@ runs:
         context github '${{ toJson(github) }}'
 
     - name: dump/env
+      shell: bash
       env:
         current_step: env
+      shell: bash
       run: |
         set -Eeuo pipefail
         context env '${{ toJson(env) }}'
@@ -31,6 +34,7 @@ runs:
     #     echo '${{ toJson(vars) }}' | TERM=xterm jq --color-output .
     
     - name: dump/runner
+      shell: bash
       env:
         current_step: runner
       run: |
@@ -38,6 +42,7 @@ runs:
         context runner '${{ toJson(runner) }}'
 
     - name: dump/job
+      shell: bash
       env:
         current_step: job
       run: |
