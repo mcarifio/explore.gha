@@ -13,7 +13,7 @@ on:
         default: echo
       # --field args="one two three four"
       args:
-        description "entry point's args"
+        description "entry point args"
         required: false
         default: ''
 
