@@ -4,11 +4,12 @@ description: dump contexts
 
 runs:
   using: "composite"
-  shell: bash
+  # shell: bash
   steps:
     - name: dump/github
       env:
         current_step: github
+        BASH_ENV: "${{ github.workspace }}/bash_env.sh"
       run: |
         set -Eeuo pipefail
         context github '${{ toJson(github) }}'
