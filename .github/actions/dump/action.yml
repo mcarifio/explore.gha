@@ -4,9 +4,9 @@ description: dump contexts
 
 runs:
   using: "composite"
-  shell: "bash"
   steps:
     - name: dump/github
+      shell: bash
       env:
         current_step: github
         BASH_ENV: "${{ github.workspace }}/bash_env.sh"
@@ -15,6 +15,7 @@ runs:
         context github '${{ toJson(github) }}'
 
     - name: dump/env
+      shell: bash
       env:
         current_step: env
         BASH_ENV: "${{ github.workspace }}/bash_env.sh"
@@ -32,6 +33,7 @@ runs:
     #     echo '${{ toJson(vars) }}' | TERM=xterm jq --color-output .
     
     - name: dump/runner
+      shell: bash
       env:
         current_step: runner
         BASH_ENV: "${{ github.workspace }}/bash_env.sh"
@@ -40,6 +42,7 @@ runs:
         context runner '${{ toJson(runner) }}'
 
     - name: dump/job
+      shell: bash
       env:
         current_step: job
         BASH_ENV: "${{ github.workspace }}/bash_env.sh"
