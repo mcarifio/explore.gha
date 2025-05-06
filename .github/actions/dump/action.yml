@@ -18,7 +18,6 @@ runs:
       env:
         current_step: env
         BASH_ENV: "${{ github.workspace }}/bash_env.sh"
-      shell: bash
       run: |
         set -Eeuo pipefail
         context env '${{ toJson(env) }}'
