@@ -21,14 +21,14 @@ runs:
         echo '${{ env.current_step }}'
         echo '${{ toJson(env) }}' | TERM=xterm jq --color-output .
 
-    - name: vars
-      env:
-        current_step: vars
-      shell: bash
-      if: ${{ fromJSON(toJSON(vars)) != {} }}
-      run: |
-        echo '${{ env.current_step }}'
-        echo '${{ toJson(vars) }}' | TERM=xterm jq --color-output .
+    # - name: vars
+    #   env:
+    #     current_step: vars
+    #   shell: bash
+    #   if: ${{ fromJSON(toJSON(vars)) != {} }}
+    #   run: |
+    #     echo '${{ env.current_step }}'
+    #     echo '${{ toJson(vars) }}' | TERM=xterm jq --color-output .
 
     - name: runner
       env:
