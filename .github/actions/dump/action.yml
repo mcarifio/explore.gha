@@ -23,14 +23,15 @@ runs:
         set -Eeuo pipefail
         context env '${{ toJson(env) }}'
 
-    # - name: vars
-    #   env:
-    #     current_step: vars
-    #   shell: bash
-    #   if: ${{ fromJSON(toJSON(vars)) != {} }}
-    #   run: |
-    #     echo '${{ env.current_step }}'
-    #     echo '${{ toJson(vars) }}' | TERM=xterm jq --color-output .
+    - name: dump/vars
+      if: ${{ fromJSON(toJSON(vars)) != {} }}
+      shell: bash
+      env:
+        current_step: vars
+        BASH_ENV: "${{ github.workspace }}/bash_env.sh"
+      run: |
+        set -Eeuo pipefail
+        context var '${{ toJson(var) }}'
     
     - name: dump/runner
       shell: bash
