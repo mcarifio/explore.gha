@@ -29,7 +29,7 @@ jobs:
       - name: dump-contexts
         env:
           current_step: dump-contexts
-        uses: .github/actions/dump
+        uses: ./.github/actions/dump
 
 
       # contexts: github, env, job, jobs, steps, runner, secrets, strategy, matrix, needs, inputs, config, status
