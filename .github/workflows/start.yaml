@@ -1,4 +1,4 @@
-#!/usr/bin/env -S gh workflow run
+#!/usr/bin/env -S gh workflow run start
 
 name: start
 run-name: "github.actor ${{ github.actor }}"

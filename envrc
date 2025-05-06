@@ -1,0 +1,5 @@
+# direnv allow
+export ROOT="$(dirname $(realpath -Lq ${BASH_SOURCE}))"
+PATH_add .github/workflows bin
+
+
