@@ -5,17 +5,17 @@ name: launch
 on:
   # gh workflow run --workflow=launch.yaml
   workflow_dispatch:
-    inputs:
-      # --field entry=${name}
-      entry:
-        description: "inputs.entry, a relative script pathname"
-        required: false
-        default: echo
-      # --field args="one two three four"
-      args:
-        description "entry point's args"
-        required: false
-        default: ''
+    # inputs:
+    #   # --field entry=${name}
+    #   entry:
+    #     description: "inputs.entry, a relative script pathname"
+    #     required: false
+    #     default: echo
+    #   # --field args="one two three four"
+    #   args:
+    #     description "entry point's args"
+    #     required: false
+    #     default: ''
 
 defaults:
   run:
