@@ -33,13 +33,21 @@ jobs:
         uses: ./.github/actions/dump
 
       # contexts: github env vars job steps runner secrets strategy matrix needs inputs
-      - name: ${{ env.current_job }}/announce
+      - name: ${{ env.current_job }}/contexts
         env:
-          current_step: announce
+          current_step: contexts
         run: |
-          for ctx in github env vars job steps runner secrets strategy matrix needs inputs; do
-            context ${ctx} '${{ toJSON('$ctx') }}'
-          done
+          context github '${{ toJSON(github) }}'
+          context env '${{ toJSON(env) }}'
+          context vars '${{ toJSON(vars) }}'
+          context job '${{ toJSON(job) }}'
+          context steps '${{ toJSON(steps) }}'
+          context runner '${{ toJSON(runner) }}'
+          context secrets '${{ toJSON(secrets) }}'
+          context strategy '${{ toJSON(strategy) }}'
+          context matrix '${{ toJSON(matrix) }}'
+          context needs '${{ toJSON(needs) }}'
+          context inputs '${{ toJSON(inputs) }}'
 
       - name: ${{ env.current_job }}/tree
         env:
