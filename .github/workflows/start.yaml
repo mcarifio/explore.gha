@@ -22,14 +22,14 @@ jobs:
 
       # always first?
       - name: checkout
-        uses: actions/checkout@v4
         env:
           current_step: checkout
+        uses: actions/checkout@v4
 
       - name: dump-contexts
-        uses: ./.github/actions/dump
         env:
           current_step: dump-contexts
+        uses: .github/actions/dump
 
 
       # contexts: github, env, job, jobs, steps, runner, secrets, strategy, matrix, needs, inputs, config, status

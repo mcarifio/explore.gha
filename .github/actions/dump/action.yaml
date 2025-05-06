@@ -17,7 +17,7 @@ runs:
         current_step: env
       run: |
         echo '${{ env.current_step }}'
-        echo '${{ toJson(${{ env }}) }}' | TERM=xterm jq --color-output .
+        echo '${{ toJson(env) }}' | TERM=xterm jq --color-output .
       shell: bash
 
     - name: vars
