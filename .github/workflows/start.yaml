@@ -42,7 +42,8 @@ jobs:
         run: |
           # echo "* ${{ env.current_step }}"
           # declare -p BASH_ENV HOME TOP current_step
-          unset BASH_ENV
+          unset -v BASH_ENV
+          declare -p BASH_ENV
           echo 'env'; echo '${{ toJSON(env) }}' | jq || true
           echo 'vars'; echo '${{ toJSON(vars) }}' | jq || true
 
