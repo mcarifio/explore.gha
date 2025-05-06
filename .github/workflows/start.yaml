@@ -53,4 +53,4 @@ jobs:
           current_step: EXIT
         if: always()
         run: |
-          echo "${{ current_step }}: ${{ job.status }}"
+          echo "${{ env.current_step }}: ${{ job.status }}"

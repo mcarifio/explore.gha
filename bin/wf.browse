@@ -4,9 +4,15 @@ set -Eeuo pipefail
 # wf.browse ${wf}.yaml
 
 latest-run-job-url() (
-    local _prefix="$(gh run list --workflow "${1:?'expecting a workflow name'}" --limit 1 --json url -q '.[0].url')"
+    local _yaml="${1:?'expecting a workflow name'}"
+    local _prefix="$(gh run list --workflow "${_yaml}" --limit 1 --json url -q '.[0].url')"
     local -i _job=$(gh run view "${_prefix##*/}" --json jobs -q '.jobs[0].databaseId')
-    echo "${_prefix}/job/${_job}"
+    if (( _job > 0 )); then
+        echo "${_prefix}/job/${_job}"
+    else
+        >&2 echo "No job created for workflow '${_yaml}'"
+        echo "${_prefix}"
+    fi    
 )
 
 main() (
