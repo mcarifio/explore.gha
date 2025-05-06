@@ -9,9 +9,8 @@ on:
 
 defaults:
   run:
-     # set -Eeuo pipefail
+     # set -Eeuo pipefail, note that --init-file ${file} is NOT honored
      # shell: bash -eo pipefail -x -- {0}
-     # note: --init-file ${file} is not honored
      shell: bash -eo pipefail -- {0}
 
 jobs:
@@ -19,44 +18,38 @@ jobs:
     runs-on: ubuntu-latest
     env:
       current_job: start-job0
-      TOP: "${{ github.workspace }}"
+      BUILD_ROOT: "${{ github.workspace }}"
+      # (indirectly) sourced before each step
+      BASH_ENV: "${{ github.workspace }}/bash_env.sh"
     steps:
-
-      # always first?
       - name: checkout
         env:
-          current_step: checkout
+          current_step: ${{ env.current_job }}/checkout
         uses: actions/checkout@v4
 
       - name: dump-contexts
         env:
-          current_step: dump-contexts
+          current_step: ${{ env.current_job }}/dump-contexts
         uses: ./.github/actions/dump
 
 
       # contexts: github, env, job, jobs, steps, runner, secrets, strategy, matrix, needs, inputs, config, status
       - name: announce
         env:
-          current_step: "${{ env.current_job }}/announce"
-          BASH_ENV: "${{ github.workspace }}/bash_env.sh"
+          current_step: ${{ env.current_job }}/announce
         run: |
-          # echo "* ${{ env.current_step }}"
-          declare -p BASH_ENV HOME TOP current_step || true
           echo 'env'; echo '${{ toJSON(env) }}' | jq || true
           echo 'vars'; echo '${{ toJSON(vars) }}' | jq || true
 
-      - name: tree
+      - name: "${{ env.current_job }}/tree"
         env:
-          current_step: "${{ env.current_job }}/tree"
+          current_step: tree
         run: |
-          # echo "* ${{ env.current_step }}"
-          declare -p BASH_ENV || true
-          build.root || true
           tree ${PWD}
 
-      - name: exit
+      - name: "${{ env.current_job }}/EXIT"
         env:
-          current_step: "${{ env.current_job }}/exit"
+          current_step: EXIT
+        if: always()
         run: |
-          echo "* ${{ env.current_step }}"
           echo "exit: ${{ job.status }}"
