@@ -8,9 +8,11 @@ on:
   push:
 
 defaults:
+  env:
+    BASH_ENV: ./.github/workflows/.bashrc
   run:
      # set -Eeuo pipefail
-     shell: BASH_ENV=./.github/workflows/.bashrc bash --noprofile -eo pipefail -x {0}
+     shell: bash --noprofile -eo pipefail -x {0}
 
 
 jobs:
