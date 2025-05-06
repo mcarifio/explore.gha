@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+set -Eeuo pipefail
+
+latest-run-job-url() (
+    local _prefix="$(gh run list --workflow "${1:?'expecting a workflow name'}" --limit 1 --json url -q '.[0].url')"
+    local -i _job=$(gh run view "${_prefix##*/}" --json jobs -q '.jobs[0].databaseId')
+    echo "${_prefix}/job/${_job}"
+)
+
+main() (
+    local _yaml="${1:?'expecting a workflow name'}"; _yaml=${_yaml##*/}
+    xdg-open "$(latest-run-job-url "${_yaml}")"
+)
+
+main "$@"

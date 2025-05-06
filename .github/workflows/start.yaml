@@ -1,5 +1,5 @@
-#!/usr/bin/env -S gh workflow run start
-
+# gh workflow run --workflow=start.yaml
+# bin/wf.run start.yaml
 name: start
 run-name: "github.actor ${{ github.actor }}"
 

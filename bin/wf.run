@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+set -Eeuo pipefail
+
+run() ( gh workflow run ${1:?'expecting a workflow'}; )
+
+main() (
+    local _yaml="${1:?'expecting a workflow name'}"; _yaml=${_yaml##*/}
+    run "${_yaml}" && wf.browse "${_yaml}"
+)
+
+main "$@"
