@@ -54,7 +54,7 @@ jobs:
           current_step: tree
         run: |
           echo "* ${{ env.current_job }}/${{ env.current_step }}"
-          tree ${PWD}
+          tree -aF ${PWD}
 
       - name: exit
         env:
