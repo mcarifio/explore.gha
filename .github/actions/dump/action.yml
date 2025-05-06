@@ -1,12 +1,11 @@
 # https://docs.github.com/en/actions/sharing-automations/creating-actions/metadata-syntax-for-github-actions
 name: dump
 description: dump contexts
+env:
+  current_action: dump
 
 runs:
   using: "composite"
-  env:
-    current_action: dump
-
   steps:
     - name: ${{ env.current_action }}/github
       env:
@@ -36,12 +35,12 @@ runs:
         current_step: runner
       run: |
         set -Eeuo pipefail
-        context env '${{ toJson(env) }}'
+        context runner '${{ toJson(runner) }}'
 
     - name: job
       env:
         current_step: job
       run: |
         set -Eeuo pipefail
-        context env '${{ toJson(env) }}'
+        context job '${{ toJson(job) }}'
 
