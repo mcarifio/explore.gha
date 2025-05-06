@@ -43,7 +43,6 @@ jobs:
           # echo "* ${{ env.current_step }}"
           # declare -p BASH_ENV HOME TOP current_step
           unset -v BASH_ENV
-          declare -p BASH_ENV
           echo 'env'; echo '${{ toJSON(env) }}' | jq || true
           echo 'vars'; echo '${{ toJSON(vars) }}' | jq || true
 
@@ -52,7 +51,7 @@ jobs:
           current_step: "${{ env.current_job }}/tree"
         run: |
           # echo "* ${{ env.current_step }}"
-          declare -p BASH_ENV
+          declare -p BASH_ENV || true
           tree ${PWD}
 
       - name: exit
