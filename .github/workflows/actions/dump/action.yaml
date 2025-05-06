@@ -1,0 +1,51 @@
+name: dump
+description: dump contexts
+
+runs:
+  using: "composite"
+  steps:
+    - name: github
+      env:
+        current_step: github
+        context: github
+      run: |
+        echo '${{ env.current_step }}'
+        echo '${{ toJson(${{ env.context }}) }}' | TERM=xterm jq --color-output .
+      shell: bash
+
+    - name: env
+      env:
+        current_step: env
+        context: env
+      run: |
+        echo '${{ env.current_step }}'
+        echo '${{ toJson(${{ env.context }}) }}' | TERM=xterm jq --color-output .
+      shell: bash
+
+    - name: vars
+      env:
+        current_step: vars
+        context: vars
+      run: |
+        echo '${{ env.current_step }}'
+        echo '${{ toJson(${{ env.context }}) }}' | TERM=xterm jq --color-output .
+      shell: bash
+
+    - name: runner
+      env:
+        current_step: runner
+        context: runner
+      run: |
+        echo '${{ env.current_step }}'
+        echo '${{ toJson(${{ env.context }}) }}' | TERM=xterm jq --color-output .
+      shell: bash
+
+    - name: job
+      env:
+        current_step: job
+        context: job
+      run: |
+        echo '${{ env.current_step }}'
+        echo '${{ toJson(${{ env.context }}) }}' | TERM=xterm jq --color-output .
+      shell: bash
+

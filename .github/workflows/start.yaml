@@ -26,6 +26,12 @@ jobs:
         env:
           current_step: checkout
 
+      - name: dump-contexts
+        uses: .github/actions/dump
+        env:
+          current_step: dump-contexts
+
+
       # contexts: github, env, job, jobs, steps, runner, secrets, strategy, matrix, needs, inputs, config, status
       - name: announce
         env:
@@ -40,8 +46,8 @@ jobs:
           echo "github.event_name: ${{ github.event_name }}"
           echo "git branch: ${{ github.repository }}/${{ github.ref }}"
 
-          echo 'env'; echo "${{ toJSON(env) }}" | jq -r . || true
-          echo 'vars'; echo "${{ toJSON(vars) }}" | jq -r . || true
+          echo 'env'; echo '${{ toJSON(env) }}' | jq --color-output . || true
+          echo 'vars'; echo '${{ toJSON(vars) }}' | jq --color-output . || true
 
       - name: tree
         env:
