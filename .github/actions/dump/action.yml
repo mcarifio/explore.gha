@@ -1,21 +1,19 @@
 # https://docs.github.com/en/actions/sharing-automations/creating-actions/metadata-syntax-for-github-actions
 name: dump
 description: dump contexts
-env:
-  current_action: dump
 
 runs:
   using: "composite"
   shell: bash
   steps:
-    - name: ${{ env.current_action }}/github
+    - name: dump/github
       env:
         current_step: github
       run: |
         set -Eeuo pipefail
         context github '${{ toJson(github) }}'
 
-    - name: env
+    - name: dump/env
       env:
         current_step: env
       run: |
@@ -31,14 +29,14 @@ runs:
     #     echo '${{ env.current_step }}'
     #     echo '${{ toJson(vars) }}' | TERM=xterm jq --color-output .
     
-    - name: runner
+    - name: dump/runner
       env:
         current_step: runner
       run: |
         set -Eeuo pipefail
         context runner '${{ toJson(runner) }}'
 
-    - name: job
+    - name: dump/job
       env:
         current_step: job
       run: |
