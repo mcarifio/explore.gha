@@ -24,7 +24,7 @@ runs:
         context env '${{ toJson(env) }}'
 
     - name: dump/vars
-      if: ${{ fromJSON(toJSON(vars)) != {} }}
+      if: ${{ fromJSON(toJSON(var)) != {} }}
       shell: bash
       env:
         current_step: vars
