@@ -1,0 +1,53 @@
+# gh workflow run --workflow=launch.yaml --field entry=${name} --field args="one two three four"
+# bin/wf.run launch.yaml --entry=${name}
+name: launch
+
+on:
+  # allows gh workflow run
+  workflow_dispatch:
+    inputs:
+      entry:
+        description: "inputs.entry, a relative script pathname"
+        required: false
+        default: echo
+      args:
+        description "entry point's args"
+        required: false
+        default: ''
+  push:
+
+defaults:
+  run:
+     # set -Eeuo pipefail, note that --init-file ${file} is NOT honored
+     # shell: bash -Eueo pipefail -x -- {0}
+     shell: bash -Eeuo pipefail -- {0}
+
+jobs:
+  launch:
+    runs-on: ubuntu-latest
+    env:
+      current_job: launch
+      BUILD_ROOT: "${{ github.workspace }}"
+      # (indirectly) sourced before each step
+      BASH_ENV: "${{ github.workspace }}/bash_env.sh"
+    steps:
+      # get the code
+      - name: ${{ env.current_job }}/checkout
+        env:
+          current_step: checkout
+        uses: actions/checkout@v4
+
+      # launch a script
+      - name: ${{ env.current_job }}/launch
+        env:
+          current_step: launch
+        run: |
+          ${{ inputs.entry }} ${{ input.args }}
+          
+      # report the exit status
+      - name: ${{ env.current_job }}/EXIT
+        env:
+          current_step: EXIT
+        if: always()
+        run: |
+          echo "${{ env.current_step }}: ${{ job.status }}"
