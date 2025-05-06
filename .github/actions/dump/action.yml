@@ -6,17 +6,20 @@ runs:
   using: "composite"
   env:
     current_action: dump
+  shell: bash
   steps:
     - name: ${{ env.current_action }}/github
       env:
         current_step: github
       run: |
+        set -Eeuo pipefail
         context github '${{ toJson(github) }}'
 
     - name: env
       env:
         current_step: env
       run: |
+        set -Eeuo pipefail
         context env '${{ toJson(env) }}'
 
     # - name: vars
@@ -32,11 +35,13 @@ runs:
       env:
         current_step: runner
       run: |
+        set -Eeuo pipefail
         context env '${{ toJson(env) }}'
 
     - name: job
       env:
         current_step: job
       run: |
+        set -Eeuo pipefail
         context env '${{ toJson(env) }}'
 

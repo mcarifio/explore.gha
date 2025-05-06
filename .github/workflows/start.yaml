@@ -32,8 +32,6 @@ jobs:
         env:
           current_step: dump-contexts
         uses: ./.github/actions/dump
-        shell: bash -Eeuo pipefail -- {0}
-
 
       # contexts: github, env, job, jobs, steps, runner, secrets, strategy, matrix, needs, inputs, config, status
       - name: ${{ env.current_job }}/announce
