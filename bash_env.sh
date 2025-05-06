@@ -10,5 +10,7 @@ f.const build.root "$(dirname $(realpath -Lq ${BASH_SOURCE}))"
 
 jq() ( command ${FUNCNAME} --color-output "$@"; )
 f.x jq
+
+tree() ( command ${FUNCNAME} -aF -I .git "$@"; )
 # set +x
 

@@ -22,6 +22,7 @@ jobs:
     env:
       current_job: start-job0
       BASH_ENV: "${{ github.workspace }}/bash_env.sh"
+      TOP: "${{ github.workspace }}"
     steps:
 
       # always first?
@@ -39,24 +40,23 @@ jobs:
       # contexts: github, env, job, jobs, steps, runner, secrets, strategy, matrix, needs, inputs, config, status
       - name: announce
         env:
-          current_step: announce
+          current_step: "${{ env.current_job }}/announce"
         run: |
-          echo "* ${{ env.current_job }}/${{ env.current_step }}"
-          pwd; declare -p BASH_ENV HOME; build.root
-
+          echo "* ${{ env.current_step }}"
+          declare -p BASH_ENV HOME TOP current_step
           echo 'env'; echo '${{ toJSON(env) }}' | jq || true
           echo 'vars'; echo '${{ toJSON(vars) }}' | jq || true
 
       - name: tree
         env:
-          current_step: tree
+          current_step: "${{ env.current_job }}/tree"
         run: |
-          echo "* ${{ env.current_job }}/${{ env.current_step }}"
-          tree -aF ${PWD}
+          echo "* ${{ env.current_step }}"
+          tree ${PWD}
 
       - name: exit
         env:
-          current_step: exit
+          current_step: "${{ env.current_job }}/exit"
         run: |
-          echo "* ${{ env.current_job }}/${{ env.current_step }}"
+          echo "* ${{ env.current_step }}"
           echo "exit: ${{ job.status }}"
