@@ -42,8 +42,8 @@ jobs:
           current_step: announce
         run: |
           echo "* ${{ env.current_job }}/${{ env.current_step }}"
-          set -x
-          here
+          pwd; declare -p BASH_ENV
+          # here
 
           echo 'env'; echo '${{ toJSON(env) }}' | jq || true
           echo 'vars'; echo '${{ toJSON(vars) }}' | jq || true
