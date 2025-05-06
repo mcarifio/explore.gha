@@ -10,7 +10,7 @@ on:
 defaults:
   run:
      # set -Eeuo pipefail
-     shell: bash --noprofile --norc -eo pipefail -x {0}
+     shell: bash --noprofile --rcfile=./.github/workflows/.bashrc -eo pipefail -x {0}
 
 
 jobs:
@@ -38,13 +38,14 @@ jobs:
           current_step: announce
         run: |
           echo "* ${{ env.current_job }}/${{ env.current_step }}"
-          echo "runner.os: ${{ runner.os }}"
-          echo "runner.name: ${{ runner.name }}"
-          echo "runner.arch: ${{ runner.arch }}"
-          echo "github.job: ${{ github.job }}"
-          echo "github.workflow: ${{ github.workflow }}"
-          echo "github.event_name: ${{ github.event_name }}"
-          echo "git branch: ${{ github.repository }}/${{ github.ref }}"
+          f
+          # echo "runner.os: ${{ runner.os }}"
+          # echo "runner.name: ${{ runner.name }}"
+          # echo "runner.arch: ${{ runner.arch }}"
+          # echo "github.job: ${{ github.job }}"
+          # echo "github.workflow: ${{ github.workflow }}"
+          # echo "github.event_name: ${{ github.event_name }}"
+          # echo "git branch: ${{ github.repository }}/${{ github.ref }}"
 
           echo 'env'; echo '${{ toJSON(env) }}' | jq --color-output . || true
           echo 'vars'; echo '${{ toJSON(vars) }}' | jq --color-output . || true
