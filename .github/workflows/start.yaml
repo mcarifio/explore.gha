@@ -51,6 +51,7 @@ jobs:
         run: |
           # echo "* ${{ env.current_step }}"
           declare -p BASH_ENV || true
+          build.root || true
           tree ${PWD}
 
       - name: exit
