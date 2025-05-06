@@ -7,9 +7,6 @@ on:
   workflow_dispatch:
   push:
 
-env:
-  BASH_ENV: ./.github/workflows/.bashrc
-
 defaults:
   run:
      # set -Eeuo pipefail
@@ -21,6 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       current_job: start-job0
+      BASH_ENV: ./.github/workflows/.bashrc
     steps:
 
       # always first?
