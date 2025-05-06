@@ -2,17 +2,22 @@
 
 name: start
 run-name: "github.actor ${{ github.actor }}"
+
 on:
   workflow_dispatch:
   push:
+
+defaults:
+  run:
+     # set -Eeuo pipefail
+     shell: bash --noprofile --norc -eo pipefail -x {0}
+
+
 jobs:
   start-job0:
     runs-on: ubuntu-latest
     env:
       current_job: start-job0
-    defaults:
-      run:
-        shell: bash -x {0}
     steps:
 
       # always first?
@@ -26,26 +31,28 @@ jobs:
         env:
           current_step: announce
         run: |
+          echo "* ${{ env.current_job }}/${{ env.current_step }}"
           echo "runner.os: ${{ runner.os }}"
           echo "runner.name: ${{ runner.name }}"
           echo "runner.arch: ${{ runner.arch }}"
-          echo "job name github.job: ${{ github.job }}"
-          echo "workflow name: ${{ github.workflow }}"
+          echo "github.job: ${{ github.job }}"
+          echo "github.workflow: ${{ github.workflow }}"
           echo "github.event_name: ${{ github.event_name }}"
           echo "git branch: ${{ github.repository }}/${{ github.ref }}"
 
-          echo 'env'; echo "${{ toJSON(env) }}" | jq -r .
-          echo 'vars'; echo "${{ toJSON(vars) }}" | jq -r .
+          echo 'env'; echo "${{ toJSON(env) }}" | jq -r . || true
+          echo 'vars'; echo "${{ toJSON(vars) }}" | jq -r . || true
 
-      - name: ls
+      - name: tree
         env:
-          current_step: ls
+          current_step: tree
         run: |
-          echo "pwd: ${PWD}"
-          ls -la ${{ github.workspace }}
+          echo "* ${{ env.current_job }}/${{ env.current_step }}"
+          tree ${PWD}
 
       - name: exit
         env:
           current_step: exit
         run: |
+          echo "* ${{ env.current_job }}/${{ env.current_step }}"
           echo "exit: ${{ job.status }}"
