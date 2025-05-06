@@ -11,10 +11,8 @@ defaults:
   run:
      # set -Eeuo pipefail
      # shell: bash -eo pipefail -x -- {0}
+     # note: --init-file ${file} is not honored
      shell: bash -eo pipefail -- {0}
-     # --init-file init-file.sh does not source?
-     # shell: bash --init-file init-file.sh -eo pipefail -x -- {0}
-
 
 jobs:
   start-job0:
@@ -42,8 +40,9 @@ jobs:
         env:
           current_step: "${{ env.current_job }}/announce"
         run: |
-          echo "* ${{ env.current_step }}"
-          declare -p BASH_ENV HOME TOP current_step
+          # echo "* ${{ env.current_step }}"
+          # declare -p BASH_ENV HOME TOP current_step
+          unset BASH_ENV
           echo 'env'; echo '${{ toJSON(env) }}' | jq || true
           echo 'vars'; echo '${{ toJSON(vars) }}' | jq || true
 
@@ -51,7 +50,8 @@ jobs:
         env:
           current_step: "${{ env.current_job }}/tree"
         run: |
-          echo "* ${{ env.current_step }}"
+          # echo "* ${{ env.current_step }}"
+          declare -p BASH_ENV
           tree ${PWD}
 
       - name: exit
