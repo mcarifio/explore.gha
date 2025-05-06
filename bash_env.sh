@@ -29,7 +29,7 @@ context() (
     local label=${1:?'expecting a label like gitub'}
     local payload=${2:?'expecting a json payload'}
     echo ${label}
-    jq "${payload}"
+    jq <<< ${payload}
 )
 f.x context
 
