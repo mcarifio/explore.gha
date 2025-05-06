@@ -24,14 +24,14 @@ runs:
         context env '${{ toJson(env) }}'
 
     - name: dump/vars
-      if: ${{ fromJSON(toJSON(var)) != {} }}
+      if: ${{ fromJSON(toJSON(vars)) != {} }}
       shell: bash
       env:
         current_step: vars
         BASH_ENV: "${{ github.workspace }}/bash_env.sh"
       run: |
         set -Eeuo pipefail
-        context var '${{ toJson(var) }}'
+        context vars '${{ toJson(vars) }}'
     
     - name: dump/runner
       shell: bash
