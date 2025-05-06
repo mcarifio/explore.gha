@@ -1,3 +1,4 @@
+# https://docs.github.com/en/actions/sharing-automations/creating-actions/metadata-syntax-for-github-actions
 name: dump
 description: dump contexts
 
@@ -7,40 +8,40 @@ runs:
     - name: github
       env:
         current_step: github
+      shell: bash
       run: |
         echo '${{ env.current_step }}'
         echo '${{ toJson(github) }}' | TERM=xterm jq --color-output .
-      shell: bash
 
     - name: env
       env:
         current_step: env
+      shell: bash
       run: |
         echo '${{ env.current_step }}'
         echo '${{ toJson(env) }}' | TERM=xterm jq --color-output .
-      shell: bash
 
     - name: vars
       env:
         current_step: vars
+      shell: bash
       run: |
         echo '${{ env.current_step }}'
         echo '${{ toJson(vars) }}' | TERM=xterm jq --color-output .
-      shell: bash
 
     - name: runner
       env:
         current_step: runner
+      shell: bash
       run: |
         echo '${{ env.current_step }}'
         echo '${{ toJson(runner) }}' | TERM=xterm jq --color-output .
-      shell: bash
 
     - name: job
       env:
         current_step: job
+      shell: bash
       run: |
         echo '${{ env.current_step }}'
         echo '${{ toJson(job) }}' | TERM=xterm jq --color-output .
-      shell: bash
 
