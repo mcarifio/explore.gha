@@ -1,6 +1,14 @@
-# ln -sr envrc .envrc
-# direnv allow
-export ROOT="$(dirname $(realpath -Lq ${BASH_SOURCE}))"
-PATH_add .github/workflows bin
+# source envrc
+if [[ "${BASH_SOURCE##*/}" = envrc ]]; then
+  # you sourced envrc; link it to .envrc and allow
+  ln -srf ${BASH_SOURCE} "$(dirname $(realpath -Lq ${BASH_SOURCE}))/.envrc"
+  direnv allow
+else
+  # direnv is running this script
+  export ROOT="$(dirname $(realpath -Lq ${BASH_SOURCE}))"
+  PATH_add .github/workflows bin
+fi
+
+
 
 
