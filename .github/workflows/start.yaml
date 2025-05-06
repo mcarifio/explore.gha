@@ -1,7 +1,6 @@
 # gh workflow run --workflow=start.yaml
 # bin/wf.run start.yaml
 name: start
-run-name: "github.actor ${{ github.actor }}"
 
 on:
   # allows gh workflow run
@@ -33,13 +32,14 @@ jobs:
           current_step: dump
         uses: ./.github/actions/dump
 
-      # contexts: github, env, job, jobs, steps, runner, secrets, strategy, matrix, needs, inputs, config, status
+      # contexts: github env vars job steps runner secrets strategy matrix needs inputs
       - name: ${{ env.current_job }}/announce
         env:
           current_step: announce
         run: |
-          context env '${{ toJSON(env) }}'
-          context vars '${{ toJSON(vars) }}'
+          for ctx in github env vars job steps runner secrets strategy matrix needs inputs; do
+            context ${ctx} '${{ toJSON('$ctx') }}'
+          done
 
       - name: ${{ env.current_job }}/tree
         env:
