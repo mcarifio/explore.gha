@@ -3,11 +3,14 @@ set -Eeuo pipefail
 
 # wf.run ${wf}.yamlg
 
-run() ( gh workflow run ${1:?'expecting a workflow'}; )
+run() (
+    local _yaml="${1:?'expecting a workflow'}"; _yaml=${_yaml##*/}; shift
+    gh workflow run ${_yaml} "$@"
+)
 
 main() (
-    local _yaml="${1:?'expecting a workflow name'}"; _yaml=${_yaml##*/}
-    run "${_yaml}" && wf.browse "${_yaml}"
+    local _yaml="${1:?'expecting a workflow name'}"; _yaml=${_yaml##*/}; shift
+    run "${_yaml}" "$@" && wf.browse "${_yaml}"
 )
 
 main "$@"
