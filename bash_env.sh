@@ -37,6 +37,9 @@ f.x context
 tree() ( command ${FUNCNAME} -aF -I .git "$@"; )
 f.x tree
 
+path() ( printf '%s\n' ${PATH//:/ }; )
+f.x path
+
 path.add() {
     for p in "$@"; do
         local d="$(realpath -Lq ${p})"

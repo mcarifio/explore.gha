@@ -38,7 +38,9 @@ jobs:
       # launch a script
       - run: |
           echo "${{ env.current_job }}/${{ env.current_step}}"
+          path
           path.add "${{ github.workspace }}/gha"
+          path
           which ${{ inputs.entry }}
           ${{ inputs.entry }} ${{ inputs.args }}
         env:
