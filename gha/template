@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+set -Eeuo pipefail
+
+# template is a starting point to implement other entries.
+# To test locally: BASH_ENV=../bash_env.sh ./template
+# To create a `newentry` from `template`
+#   declare newentry=new-entry
+#   cp template ${newentry}
+#   emacs ${newentry}
+#   BASH_ENV=../bash_env.sh ./${newentry} [arguments...]
+#   git add .
+#   git commit -am 'new entry'
+
+main() (
+    declare -p script
+    printf '%s ' "${script}" "$@"
+    echo    
+)
+
+forward main "$@"

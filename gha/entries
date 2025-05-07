@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+set -Eeuo pipefail
+
+# Enumerate all `launch` workflow entry points. See launch.yaml.
+# To test locally: BASH_ENV=../bash_env.sh ./entries
+
+main() (
+    # declare -p script; set -x
+    find ${script%/*} -mindepth 1 -maxdepth 1 -name \* -a ! -name template -type f -executable -exec basename {} \;
+)
+
+forward main "$@"
+

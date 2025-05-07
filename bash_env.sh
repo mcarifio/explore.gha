@@ -5,6 +5,7 @@
 # f.e f.e => 0, f.e quux => 1
 # usage: f.e quux || return $(err "quux not defined")
 f.e() { [[ $(type -t ${1:?'expecting a function name'}) = function ]]; }
+callable() { type ${1:?'expecting a command'} &> /dev/null; }
 
 # f.x ${name}... exports all bash functions enumerated that are defined (and skips those that aren't).
 f.x() { for f in "$@"; do f.e ${f} && export -f ${f}; done; }
@@ -47,5 +48,22 @@ path.add() {
     done 
 }
 f.x path.add
+
+
+# call a function with it's arguments with a setup and a trap
+forward() {
+    [[ "$0" = -* ]] || declare -g script="$(realpath -Lq $0)"
+    local to=${1:-main}; shift || true
+    # local _trap=$(trap - ERR)
+    callable ${to} || return $(err "unknown command|function '${to}'")
+    ${to} "$@"
+    # cleanup here
+}
+f.x forward
+
+# useful for REPL exploration
+identity() { printf '%s ' ${FUNCNAME} "$@"; echo; }
+f.x identity
+
 # set +x
 

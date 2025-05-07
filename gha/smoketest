@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+# smoketest is a `launch` workflow entry point that echos it's invocation. See launch.yaml.
+# To test locally: BASH_ENV=../bash_env.sh ./smoketest
+
+main() (
+    declare -p script
+    printf '%s ' "${script}" "$@"
+    echo    
+)
+
+forward main "$@"
