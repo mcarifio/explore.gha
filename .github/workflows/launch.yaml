@@ -24,10 +24,10 @@ defaults:
      shell: bash -Eeuo pipefail -- {0}
 
 jobs:
-  launch-job:
+  launch:
     runs-on: ubuntu-latest
     env:
-      current_job: launch-job
+      current_job: launch
       BUILD_ROOT: "${{ github.workspace }}"
       # (indirectly) sourced before each step
       BASH_ENV: "${{ github.workspace }}/bash_env.sh"
@@ -37,17 +37,17 @@ jobs:
 
       # launch a script
       - run: |
-          echo '${{ env.header }}'
+          echo ${{ env.header }}
           ${{ inputs.entry }} ${{ inputs.args }}
         env:
            current_step: launch
-           header: '${{ env.current_job}}/${{ env.current_step}}'
+           header: "${{ env.current_job}}/${{ env.current_step}}"
           
       # report the exit status
       - run: |
           echo "${{ env.header }}: ${{ job.status }}"
         env:
           current_step: EXIT
-          header: '${{ env.current_job}}/${{ env.current_step}}'
+          header: "${{ env.current_job}}/${{ env.current_step}}"
         if: always()
         
