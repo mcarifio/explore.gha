@@ -2,20 +2,19 @@
 # bin/wf.run launch.yaml -f entry=${name} -f args="one two three four"
 
 name: launch
-description: launches an executable in ./gha by ${name} (-f entry=${name}) with an argument list ${args} (-f args="${args}")
 
 on:
   ## gh workflow run --workflow=launch.yaml --field entry=${name} --field args="${args}"
   workflow_dispatch:
     inputs:
-      ## --field entry=${name} #n e.g. --field entry=launch or --field entry=entries
+      ## --field entry=${name} # e.g. --field entry=smoketest or --field entry=entries
       entry:
         description: "inputs.entry, a relative (to ./gha) script pathname"
         required: false
         default: entries
       ## --field args="${args}" # e.g. --field args="one two three four"
       args:
-        description: "inputs.args, the args to ${{ inputs.entry }}"
+        description: "inputs.args, the args to inputs.entry"
         required: false
         default: ''
 
