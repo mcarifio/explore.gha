@@ -37,18 +37,15 @@ jobs:
 
       # launch a script
       - run: |
-          set -x
-          echo ${{ env.header }}
+          echo "${{ env.current_job }}/${{ env.current_step}}"
           ${{ inputs.entry }} ${{ inputs.args }}
         env:
            current_step: launch
-           header: "${{ env.current_job}}/${{ env.current_step}}"
           
       # report the exit status
       - run: |
-          echo "${{ env.header }}: ${{ job.status }}"
+          echo "${{ env.current_job }}/${{ env.current_step}}: $${ job.status }}"
         env:
           current_step: EXIT
-          header: "${{ env.current_job}}/${{ env.current_step}}"
         if: always()
         
