@@ -10,7 +10,7 @@ run() (
 
 main() (
     local _yaml="${1:?'expecting a workflow name'}"; _yaml=${_yaml##*/}; shift
-    run "${_yaml}" "$@" && wf.browse "${_yaml}"
+    run "${_yaml}" "$@" && sleep 3 && wf.browse "${_yaml}"
 )
 
 main "$@"
