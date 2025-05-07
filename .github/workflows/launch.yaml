@@ -37,6 +37,7 @@ jobs:
 
       # launch a script
       - run: |
+          set -x
           echo ${{ env.header }}
           ${{ inputs.entry }} ${{ inputs.args }}
         env:
