@@ -10,7 +10,7 @@ on:
       entry:
         description: "inputs.entry, a relative script pathname"
         required: false
-        default: echo
+        default: launch
       # --field args="one two three four"
       args:
         description: "entry point args"
@@ -38,13 +38,15 @@ jobs:
       # launch a script
       - run: |
           echo "${{ env.current_job }}/${{ env.current_step}}"
+          path.add "${{ github.workspace }}/gha"
+          declare -p PATH
           ${{ inputs.entry }} ${{ inputs.args }}
         env:
            current_step: launch
           
       # report the exit status
       - run: |
-          echo "${{ env.current_job }}/${{ env.current_step}}: $${ job.status }}"
+          echo "${{ env.current_job }}/${{ env.current_step}}: ${{ job.status }}"
         env:
           current_step: EXIT
         if: always()
