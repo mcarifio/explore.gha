@@ -44,10 +44,10 @@ jobs:
           if [[ -x "${fqpn}" ]]; then
             "${fqpn}" ${{ inputs.args }}
           else
-            >&2 printf "'%s' is not an entry (" ${{ inputs.entry }}
+            >&2 printf "'%s' is not an entry ( " ${{ inputs.entry }}
             >&2 printf "'%s' " $(${{ github.workspace }}/gha/entries }})
             >&2 printf ")\n"
-            return 1
+            exit 1
           fi
         env:
            current_step: launch-step
