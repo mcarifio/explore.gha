@@ -12,7 +12,7 @@ f.x f.e f.x
 
 # err "${message}" [${status}] prints ${message} to stderr and returns the status of that last command (ostensibly an error).
 # usage: false || return $(err "false is an error")
-err() ( local -i status=${2:-$?}; >&2 echo "${1:-${FUNCNAME}}"; return ${_status}; )
+err() ( local -i status=${2:-$?}; >&2 echo "${1:-${FUNCNAME}}"; return ${status}; )
 f.x err
 
 # f.const ${name} ${value} creates and exports ${name}() that returns ${value} when called. An alternative to exported values.

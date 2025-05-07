@@ -42,7 +42,7 @@ jobs:
           [[ -x "${fqpn}" ]] && "${fqpn}" ${{ inputs.args }} || exit $(err "'${fqpn}' not executable")          
         env:
            current_step: launch
-           fqpn: "${{ github.workspace }}/gha/$${{ inputs.entry }}"
+           fqpn: "${{ github.workspace }}/gha/${{ inputs.entry }}"
           
       # report the exit status
       - run: |
