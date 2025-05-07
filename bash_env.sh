@@ -43,7 +43,7 @@ f.x path
 path.add() {
     for p in "$@"; do
         local d="$(realpath -Lq ${p})"
-        [[ -d "${d}" && :${PATH}: != *:${d}:* ]] && export PATH="${d}:${PATH}"
+        [[ -d "${d}" && :${PATH}: != *:${d}:* ]] && export PATH="${d}:${PATH}" || true
     done 
 }
 f.x path.add
