@@ -37,11 +37,12 @@ jobs:
 
       # launch a script
       - run: |
-          echo "${{ env.current_job }}/${{ env.current_step}}"
-          path.add "${{ github.workspace }}/gha"
-          ${{ inputs.entry }} ${{ inputs.args }}
+          echo "step: ${{ env.current_job }}/${{ env.current_step}}"
+          # launch ${fqpn} if executable
+          [[ -x "${fqpn}" ]] && "${fqpn}" ${{ inputs.args }} || exit $(err "'${fqpn}' not executable")          
         env:
            current_step: launch
+           fqpn: "${{ github.workspace }}/gha/$${{ inputs.entry }}"
           
       # report the exit status
       - run: |
